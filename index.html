@@ -3,264 +3,551 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lagos Hustle 🇳🇬</title>
+<title>Lagos Hustle Life</title>
 
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(160deg,#071b12,#102d20);
-  color:white;
+* {
+  box-sizing: border-box;
 }
-.game{
-  max-width:500px;
-  margin:auto;
-  min-height:100vh;
-  padding:20px;
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  color: #222;
 }
-h1{text-align:center;margin:10px 0 5px}
-.subtitle{text-align:center;color:#b9c8bf}
-.card{
-  background:#172f25;
-  border-radius:20px;
-  padding:18px;
-  margin:15px 0;
-  box-shadow:0 8px 25px #0005;
+
+header {
+  background: #111;
+  color: white;
+  padding: 20px;
+  text-align: center;
 }
-.money{
-  text-align:center;
-  font-size:32px;
-  font-weight:bold;
-  margin:10px;
+
+header h1 {
+  margin: 0;
 }
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 15px;
 }
-.stat{
-  background:#0d2119;
-  padding:12px 5px;
-  border-radius:12px;
-  text-align:center;
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
 }
-button{
-  width:100%;
-  border:0;
-  border-radius:14px;
-  padding:15px;
-  margin:6px 0;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  background:#20c76b;
-  color:white;
+
+.stat {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #ddd;
 }
-button:active{transform:scale(.98)}
-.secondary{background:#315344}
-.danger{background:#a83232}
-.event{
-  font-size:18px;
-  line-height:1.5;
-  text-align:center;
+
+.card {
+  background: white;
+  padding: 18px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px #ddd;
 }
-.log{
-  max-height:150px;
-  overflow:auto;
-  font-size:14px;
-  line-height:1.6;
+
+button {
+  border: none;
+  padding: 12px 15px;
+  margin: 5px 3px;
+  border-radius: 8px;
+  background: #111;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
 }
-.badge{
-  display:inline-block;
-  background:#f1b928;
-  color:#111;
-  padding:5px 10px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
+
+button:hover {
+  opacity: 0.8;
+}
+
+.green {
+  background: #198754;
+}
+
+.orange {
+  background: #f39c12;
+}
+
+.red {
+  background: #dc3545;
+}
+
+.blue {
+  background: #0d6efd;
+}
+
+.item {
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 10px;
+}
+
+#message {
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+}
+
+.progress {
+  height: 12px;
+  background: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: #198754;
+}
+
+@media(max-width:600px) {
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  button {
+    width: 100%;
+    margin: 4px 0;
+  }
 }
 </style>
 </head>
 
 <body>
-<div class="game">
 
-<h1>🇳🇬 LAGOS HUSTLE</h1>
-<div class="subtitle">Your Lagos life starts here!</div>
+<header>
+  <h1>🏙️ Lagos Hustle Life</h1>
+  <p>Build your life from nothing 💰</p>
+</header>
 
-<div class="card">
-  <div class="money" id="money">₦5,000</div>
+<div class="container">
+
+  <div id="message">Welcome to Lagos Hustle Life! ❤️</div>
 
   <div class="stats">
-    <div class="stat">🍗<br>Hunger<br><b id="hunger">100</b></div>
-    <div class="stat">⚡<br>Energy<br><b id="energy">100</b></div>
-    <div class="stat">⭐<br>Rep<br><b id="rep">0</b></div>
+
+    <div class="stat">
+      💰 Money:
+      <strong>₦<span id="money">0</span></strong>
+    </div>
+
+    <div class="stat">
+      ⚡ Energy:
+      <strong><span id="energy">100</span>%</strong>
+      <div class="progress">
+        <span id="energyBar"></span>
+      </div>
+    </div>
+
+    <div class="stat">
+      🍔 Food:
+      <strong><span id="food">100</span>%</strong>
+    </div>
+
+    <div class="stat">
+      🏠 House:
+      <strong id="house">None</strong>
+    </div>
+
+    <div class="stat">
+      🚗 Car:
+      <strong id="car">None</strong>
+    </div>
+
+    <div class="stat">
+      💼 Business:
+      <strong id="business">None</strong>
+    </div>
+
   </div>
-</div>
 
-<div class="card">
-  <div class="event" id="event">
-    Welcome to Lagos!<br>
-    You have ₦5,000 in your pocket.<br><br>
-    What will you do?
+  <!-- HUSTLES -->
+
+  <div class="card">
+    <h2>💼 Hustles</h2>
+    <p>Work to make money. Working uses energy.</p>
+
+    <button class="green" onclick="hustle('street')">
+      🛒 Street Hustle +₦2,000
+    </button>
+
+    <button class="green" onclick="hustle('delivery')">
+      🛵 Delivery +₦3,500
+    </button>
+
+    <button class="green" onclick="hustle('online')">
+      📱 Online Work +₦5,000
+    </button>
+
+    <button class="green" onclick="hustle('business')">
+      💼 Business Work +₦8,000
+    </button>
   </div>
-</div>
 
-<div class="card">
+  <!-- BASIC LIFE -->
 
-<button onclick="hustle()">💼 Find a Hustle</button>
+  <div class="card">
+    <h2>🍔 Daily Life</h2>
 
-<button onclick="eat()">🍲 Buy Food — ₦500</button>
+    <button class="orange" onclick="buyFood()">
+      🍚 Buy Food -₦1,500
+    </button>
 
-<button onclick="rest()">😴 Rest</button>
+    <button class="blue" onclick="rest()">
+      😴 Rest
+    </button>
 
-<button onclick="business()">🏪 Start a Small Business</button>
+    <button onclick="saveGame()">
+      💾 Save Game
+    </button>
 
-<button class="secondary" onclick="saveGame()">💾 Save Game</button>
-
-<button class="danger" onclick="resetGame()">🔄 Restart Game</button>
-
-</div>
-
-<div class="card">
-  <span class="badge">ACTIVITY</span>
-  <div class="log" id="log">
-    Your Lagos story begins...
+    <button onclick="resetGame()">
+      🔄 Reset Game
+    </button>
   </div>
-</div>
+
+  <!-- HOUSE -->
+
+  <div class="card">
+    <h2>🏠 Houses</h2>
+
+    <div class="item">
+      <strong>🏚️ Small Room</strong>
+      <p>₦50,000</p>
+      <button onclick="buyHouse('Small Room',50000)">
+        Buy
+      </button>
+    </div>
+
+    <div class="item">
+      <strong>🏠 Nice Apartment</strong>
+      <p>₦250,000</p>
+      <button onclick="buyHouse('Nice Apartment',250000)">
+        Buy
+      </button>
+    </div>
+
+    <div class="item">
+      <strong>🏡 Luxury House</strong>
+      <p>₦2,000,000</p>
+      <button onclick="buyHouse('Luxury House',2000000)">
+        Buy
+      </button>
+    </div>
+
+    <div class="item">
+      <strong>🏰 Mansion</strong>
+      <p>₦10,000,000</p>
+      <button onclick="buyHouse('Mansion',10000000)">
+        Buy
+      </button>
+    </div>
+  </div>
+
+  <!-- CARS -->
+
+  <div class="card">
+    <h2>🚗 Cars</h2>
+
+    <div class="item">
+      🚙 Used Car — ₦500,000
+      <button onclick="buyCar('Used Car',500000)">
+        Buy
+      </button>
+    </div>
+
+    <div class="item">
+      🚘 Nice Car — ₦2,000,000
+      <button onclick="buyCar('Nice Car',2000000)">
+        Buy
+      </button>
+    </div>
+
+    <div class="item">
+      🚘 Luxury Car — ₦8,000,000
+      <button onclick="buyCar('Luxury Car',8000000)">
+        Buy
+      </button>
+    </div>
+
+    <div class="item">
+      🏎️ Supercar — ₦30,000,000
+      <button onclick="buyCar('Supercar',30000000)">
+        Buy
+      </button>
+    </div>
+  </div>
+
+  <!-- BUSINESSES -->
+
+  <div class="card">
+    <h2>🏪 Start a Business</h2>
+
+    <div class="item">
+      👗 Thrift Business — ₦100,000
+      <button onclick="buyBusiness('Thrift Business',100000)">
+        Start
+      </button>
+    </div>
+
+    <div class="item">
+      💇 Hair Business — ₦300,000
+      <button onclick="buyBusiness('Hair Business',300000)">
+        Start
+      </button>
+    </div>
+
+    <div class="item">
+      🍰 Cake Business — ₦500,000
+      <button onclick="buyBusiness('Cake Business',500000)">
+        Start
+      </button>
+    </div>
+
+    <div class="item">
+      🏢 Big Company — ₦5,000,000
+      <button onclick="buyBusiness('Big Company',5000000)">
+        Start
+      </button>
+    </div>
+  </div>
+
+  <!-- LIFE GOALS -->
+
+  <div class="card">
+    <h2>🎯 Life Goals</h2>
+
+    <p>Make ₦100,000</p>
+    <p>🏠 Buy a house</p>
+    <p>🚗 Buy a car</p>
+    <p>💼 Start a business</p>
+    <p>💰 Become wealthy</p>
+    <p>👑 Become a Lagos Hustle Millionaire</p>
+  </div>
 
 </div>
 
 <script>
 
-let money = Number(localStorage.getItem("money")) || 5000;
-let hunger = Number(localStorage.getItem("hunger")) || 100;
+let money = Number(localStorage.getItem("money")) || 0;
 let energy = Number(localStorage.getItem("energy")) || 100;
-let rep = Number(localStorage.getItem("rep")) || 0;
+let food = Number(localStorage.getItem("food")) || 100;
 
-const hustles = [
-  ["You helped someone carry goods at Oshodi.",800,10],
-  ["You delivered a package across Lagos.",1200,12],
-  ["You sold cold drinks at a busy junction.",700,8],
-  ["You helped a shop owner arrange goods.",600,7],
-  ["You made a quick graphics design for a customer.",1500,15],
-  ["You sold thrift clothes online.",2000,20],
-  ["You washed a customer's car.",1000,10],
-  ["You helped someone run an errand.",500,5]
-];
+let house = localStorage.getItem("house") || "None";
+let car = localStorage.getItem("car") || "None";
+let business = localStorage.getItem("business") || "None";
 
-function moneyFormat(n){
-  return "₦" + n.toLocaleString();
+function update() {
+
+  document.getElementById("money").textContent =
+    money.toLocaleString();
+
+  document.getElementById("energy").textContent = energy;
+
+  document.getElementById("food").textContent = food;
+
+  document.getElementById("house").textContent = house;
+
+  document.getElementById("car").textContent = car;
+
+  document.getElementById("business").textContent = business;
+
+  document.getElementById("energyBar").style.width =
+    energy + "%";
+
+  localStorage.setItem("money", money);
+  localStorage.setItem("energy", energy);
+  localStorage.setItem("food", food);
+  localStorage.setItem("house", house);
+  localStorage.setItem("car", car);
+  localStorage.setItem("business", business);
 }
 
-function update(){
-
-  if(money < 0) money = 0;
-
-  hunger = Math.max(0,Math.min(100,hunger));
-  energy = Math.max(0,Math.min(100,energy));
-
-  document.getElementById("money").innerText = moneyFormat(money);
-  document.getElementById("hunger").innerText = hunger;
-  document.getElementById("energy").innerText = energy;
-  document.getElementById("rep").innerText = rep;
-
-  localStorage.setItem("money",money);
-  localStorage.setItem("hunger",hunger);
-  localStorage.setItem("energy",energy);
-  localStorage.setItem("rep",rep);
+function message(text) {
+  document.getElementById("message").textContent = text;
 }
 
-function message(text){
-  document.getElementById("event").innerHTML = text;
+function hustle(type) {
 
-  const log = document.getElementById("log");
-  log.innerHTML = "• " + text + "<br>" + log.innerHTML;
-}
-
-function hustle(){
-
-  if(energy < 15){
-    message("😩 You are too tired. Rest first!");
+  if (energy < 15) {
+    message("😴 You are too tired. Rest first!");
     return;
   }
 
-  if(hunger < 15){
-    message("🍗 You are too hungry to hustle. Get some food!");
+  if (food <= 0) {
+    message("🍔 You need food before working!");
     return;
   }
 
-  const job = hustles[Math.floor(Math.random()*hustles.length)];
+  let earnings = 0;
 
-  money += job[1];
-  rep += job[2];
+  if (type === "street") {
+    earnings = 2000;
+  }
+
+  if (type === "delivery") {
+    earnings = 3500;
+  }
+
+  if (type === "online") {
+    earnings = 5000;
+  }
+
+  if (type === "business") {
+    earnings = 8000;
+  }
+
+  money += earnings;
   energy -= 15;
-  hunger -= 10;
+  food -= 5;
 
-  message("🔥 " + job[0] + "<br>You earned <b>" + moneyFormat(job[1]) + "</b>!");
+  if (energy < 0) energy = 0;
+  if (food < 0) food = 0;
+
+  message("🔥 Hustle complete! You earned ₦" +
+          earnings.toLocaleString());
+
   update();
 }
 
-function eat(){
+function buyFood() {
 
-  if(money < 500){
-    message("😭 You don't have enough money to buy food.");
+  if (money < 1500) {
+    message("❌ You don't have enough money for food.");
     return;
   }
 
-  money -= 500;
-  hunger = Math.min(100,hunger + 35);
+  money -= 1500;
+  food += 30;
 
-  message("🍲 You bought a good meal. Hunger restored!");
+  if (food > 100) food = 100;
+
+  message("🍚 You bought food. Your energy can now recover!");
+
   update();
 }
 
-function rest(){
+function rest() {
 
-  energy = Math.min(100,energy + 30);
-  hunger -= 5;
-
-  message("😴 You rested and regained energy.");
-  update();
-}
-
-function business(){
-
-  if(money < 3000){
-    message("💰 You need at least ₦3,000 to start a small business.");
+  if (food <= 0) {
+    message("🍔 You need food before resting.");
     return;
   }
 
-  money -= 3000;
-  rep += 25;
+  energy += 35;
+  food -= 10;
 
-  message("🏪 You started a small business! Your reputation increased.");
+  if (energy > 100) energy = 100;
+  if (food < 0) food = 0;
+
+  message("😴 You rested and recovered energy.");
+
   update();
 }
 
-function saveGame(){
+function buyHouse(name, price) {
 
-  localStorage.setItem("money",money);
-  localStorage.setItem("hunger",hunger);
-  localStorage.setItem("energy",energy);
-  localStorage.setItem("rep",rep);
+  if (house !== "None") {
+    message("🏠 You already own a house!");
+    return;
+  }
 
-  message("✅ Game saved!");
+  if (money < price) {
+    message("❌ You need ₦" +
+      (price - money).toLocaleString() +
+      " more.");
+    return;
+  }
+
+  money -= price;
+  house = name;
+
+  message("🎉 Congratulations! You bought a " + name + "! 🏠");
+
+  update();
 }
 
-function resetGame(){
+function buyCar(name, price) {
 
-  if(confirm("Restart your Lagos life?")){
-    money = 5000;
-    hunger = 100;
-    energy = 100;
-    rep = 0;
-
-    update();
-
-    message("🇳🇬 New Lagos life started! Good luck!");
+  if (car !== "None") {
+    message("🚗 You already own a car!");
+    return;
   }
+
+  if (money < price) {
+    message("❌ You need ₦" +
+      (price - money).toLocaleString() +
+      " more.");
+    return;
+  }
+
+  money -= price;
+  car = name;
+
+  message("🎉 Congratulations! You bought a " + name + "! 🚗");
+
+  update();
+}
+
+function buyBusiness(name, price) {
+
+  if (business !== "None") {
+    message("💼 You already own a business!");
+    return;
+  }
+
+  if (money < price) {
+    message("❌ You need ₦" +
+      (price - money).toLocaleString() +
+      " more.");
+    return;
+  }
+
+  money -= price;
+  business = name;
+
+  message("🎉 Your " + name + " is now open! 🏪");
+
+  update();
+}
+
+function saveGame() {
+
+  update();
+
+  message("💾 Game saved successfully!");
+}
+
+function resetGame() {
+
+  if (!confirm("Are you sure you want to restart your life?")) {
+    return;
+  }
+
+  money = 0;
+  energy = 100;
+  food = 100;
+  house = "None";
+  car = "None";
+  business = "None";
+
+  update();
+
+  message("🔄 New life started!");
 }
 
 update();

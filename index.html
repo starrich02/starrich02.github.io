@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lagos Hustle 🇳🇬</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(160deg,#071b12,#102d20);
+  color:white;
+}
+.game{
+  max-width:500px;
+  margin:auto;
+  min-height:100vh;
+  padding:20px;
+}
+h1{text-align:center;margin:10px 0 5px}
+.subtitle{text-align:center;color:#b9c8bf}
+.card{
+  background:#172f25;
+  border-radius:20px;
+  padding:18px;
+  margin:15px 0;
+  box-shadow:0 8px 25px #0005;
+}
+.money{
+  text-align:center;
+  font-size:32px;
+  font-weight:bold;
+  margin:10px;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+.stat{
+  background:#0d2119;
+  padding:12px 5px;
+  border-radius:12px;
+  text-align:center;
+}
+button{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:15px;
+  margin:6px 0;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  background:#20c76b;
+  color:white;
+}
+button:active{transform:scale(.98)}
+.secondary{background:#315344}
+.danger{background:#a83232}
+.event{
+  font-size:18px;
+  line-height:1.5;
+  text-align:center;
+}
+.log{
+  max-height:150px;
+  overflow:auto;
+  font-size:14px;
+  line-height:1.6;
+}
+.badge{
+  display:inline-block;
+  background:#f1b928;
+  color:#111;
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+<div class="game">
+
+<h1>🇳🇬 LAGOS HUSTLE</h1>
+<div class="subtitle">Your Lagos life starts here!</div>
+
+<div class="card">
+  <div class="money" id="money">₦5,000</div>
+
+  <div class="stats">
+    <div class="stat">🍗<br>Hunger<br><b id="hunger">100</b></div>
+    <div class="stat">⚡<br>Energy<br><b id="energy">100</b></div>
+    <div class="stat">⭐<br>Rep<br><b id="rep">0</b></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="event" id="event">
+    Welcome to Lagos!<br>
+    You have ₦5,000 in your pocket.<br><br>
+    What will you do?
+  </div>
+</div>
+
+<div class="card">
+
+<button onclick="hustle()">💼 Find a Hustle</button>
+
+<button onclick="eat()">🍲 Buy Food — ₦500</button>
+
+<button onclick="rest()">😴 Rest</button>
+
+<button onclick="business()">🏪 Start a Small Business</button>
+
+<button class="secondary" onclick="saveGame()">💾 Save Game</button>
+
+<button class="danger" onclick="resetGame()">🔄 Restart Game</button>
+
+</div>
+
+<div class="card">
+  <span class="badge">ACTIVITY</span>
+  <div class="log" id="log">
+    Your Lagos story begins...
+  </div>
+</div>
+
+</div>
+
+<script>
+
+let money = Number(localStorage.getItem("money")) || 5000;
+let hunger = Number(localStorage.getItem("hunger")) || 100;
+let energy = Number(localStorage.getItem("energy")) || 100;
+let rep = Number(localStorage.getItem("rep")) || 0;
+
+const hustles = [
+  ["You helped someone carry goods at Oshodi.",800,10],
+  ["You delivered a package across Lagos.",1200,12],
+  ["You sold cold drinks at a busy junction.",700,8],
+  ["You helped a shop owner arrange goods.",600,7],
+  ["You made a quick graphics design for a customer.",1500,15],
+  ["You sold thrift clothes online.",2000,20],
+  ["You washed a customer's car.",1000,10],
+  ["You helped someone run an errand.",500,5]
+];
+
+function moneyFormat(n){
+  return "₦" + n.toLocaleString();
+}
+
+function update(){
+
+  if(money < 0) money = 0;
+
+  hunger = Math.max(0,Math.min(100,hunger));
+  energy = Math.max(0,Math.min(100,energy));
+
+  document.getElementById("money").innerText = moneyFormat(money);
+  document.getElementById("hunger").innerText = hunger;
+  document.getElementById("energy").innerText = energy;
+  document.getElementById("rep").innerText = rep;
+
+  localStorage.setItem("money",money);
+  localStorage.setItem("hunger",hunger);
+  localStorage.setItem("energy",energy);
+  localStorage.setItem("rep",rep);
+}
+
+function message(text){
+  document.getElementById("event").innerHTML = text;
+
+  const log = document.getElementById("log");
+  log.innerHTML = "• " + text + "<br>" + log.innerHTML;
+}
+
+function hustle(){
+
+  if(energy < 15){
+    message("😩 You are too tired. Rest first!");
+    return;
+  }
+
+  if(hunger < 15){
+    message("🍗 You are too hungry to hustle. Get some food!");
+    return;
+  }
+
+  const job = hustles[Math.floor(Math.random()*hustles.length)];
+
+  money += job[1];
+  rep += job[2];
+  energy -= 15;
+  hunger -= 10;
+
+  message("🔥 " + job[0] + "<br>You earned <b>" + moneyFormat(job[1]) + "</b>!");
+  update();
+}
+
+function eat(){
+
+  if(money < 500){
+    message("😭 You don't have enough money to buy food.");
+    return;
+  }
+
+  money -= 500;
+  hunger = Math.min(100,hunger + 35);
+
+  message("🍲 You bought a good meal. Hunger restored!");
+  update();
+}
+
+function rest(){
+
+  energy = Math.min(100,energy + 30);
+  hunger -= 5;
+
+  message("😴 You rested and regained energy.");
+  update();
+}
+
+function business(){
+
+  if(money < 3000){
+    message("💰 You need at least ₦3,000 to start a small business.");
+    return;
+  }
+
+  money -= 3000;
+  rep += 25;
+
+  message("🏪 You started a small business! Your reputation increased.");
+  update();
+}
+
+function saveGame(){
+
+  localStorage.setItem("money",money);
+  localStorage.setItem("hunger",hunger);
+  localStorage.setItem("energy",energy);
+  localStorage.setItem("rep",rep);
+
+  message("✅ Game saved!");
+}
+
+function resetGame(){
+
+  if(confirm("Restart your Lagos life?")){
+    money = 5000;
+    hunger = 100;
+    energy = 100;
+    rep = 0;
+
+    update();
+
+    message("🇳🇬 New Lagos life started! Good luck!");
+  }
+}
+
+update();
+
+</script>
+
+</body>
+</html>

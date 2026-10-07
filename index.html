@@ -3,551 +3,1032 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lagos Hustle Life</title>
+<title>Lagos Life Simulator</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
-  color: #222;
+body{
+  font-family:Arial,sans-serif;
+  background:#101820;
+  color:white;
+  overflow-x:hidden;
 }
 
-header {
-  background: #111;
-  color: white;
-  padding: 20px;
-  text-align: center;
+button{
+  border:0;
+  border-radius:12px;
+  padding:12px 15px;
+  font-weight:bold;
+  cursor:pointer;
+  margin:4px;
 }
 
-header h1 {
-  margin: 0;
+button:active{
+  transform:scale(.96);
 }
 
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 15px;
+.top{
+  background:#087443;
+  padding:15px;
+  position:sticky;
+  top:0;
+  z-index:20;
+  box-shadow:0 3px 10px #0008;
 }
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-bottom: 15px;
+.top h1{
+  font-size:22px;
 }
 
-.stat {
-  background: white;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px #ddd;
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px;
+  margin-top:10px;
 }
 
-.card {
-  background: white;
-  padding: 18px;
-  margin-bottom: 15px;
-  border-radius: 15px;
-  box-shadow: 0 2px 8px #ddd;
+.stat{
+  background:#ffffff18;
+  padding:8px 4px;
+  border-radius:10px;
+  text-align:center;
+  font-size:12px;
 }
 
-button {
-  border: none;
-  padding: 12px 15px;
-  margin: 5px 3px;
-  border-radius: 8px;
-  background: #111;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
+.game{
+  max-width:900px;
+  margin:auto;
 }
 
-button:hover {
-  opacity: 0.8;
+.city{
+  min-height:430px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(#82c8ff 0 48%,#4b4b4b 48% 68%,#2e8c45 68%);
 }
 
-.green {
-  background: #198754;
+.sun{
+  position:absolute;
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  background:#ffd83d;
+  right:35px;
+  top:30px;
 }
 
-.orange {
-  background: #f39c12;
+.cloud{
+  position:absolute;
+  font-size:45px;
+  opacity:.8;
 }
 
-.red {
-  background: #dc3545;
+.cloud1{left:30px;top:30px}
+.cloud2{left:240px;top:75px}
+
+.road{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:85px;
+  height:120px;
+  background:#3d3d3d;
+  border-top:5px solid #777;
+  border-bottom:5px solid #222;
 }
 
-.blue {
-  background: #0d6efd;
+.road:after{
+  content:"";
+  position:absolute;
+  top:54px;
+  left:0;
+  right:0;
+  border-top:7px dashed #f5d547;
 }
 
-.item {
-  border: 1px solid #ddd;
-  padding: 12px;
-  margin: 8px 0;
-  border-radius: 10px;
+.building{
+  position:absolute;
+  background:#f2a23a;
+  border:4px solid #9b5816;
+  width:145px;
+  height:145px;
+  bottom:195px;
+  left:25px;
+  border-radius:8px;
 }
 
-#message {
-  font-weight: bold;
-  padding: 10px;
-  text-align: center;
+.building:before{
+  content:"🏠";
+  position:absolute;
+  font-size:90px;
+  left:25px;
+  top:20px;
 }
 
-.progress {
-  height: 12px;
-  background: #ddd;
-  border-radius: 10px;
-  overflow: hidden;
+.building2{
+  position:absolute;
+  background:#d95b55;
+  width:120px;
+  height:160px;
+  bottom:190px;
+  right:30px;
+  border:4px solid #87342f;
 }
 
-.progress span {
-  display: block;
-  height: 100%;
-  width: 100%;
-  background: #198754;
+.building2:before{
+  content:"🏢";
+  font-size:80px;
+  position:absolute;
+  left:17px;
+  top:35px;
 }
 
-@media(max-width:600px) {
-  .stats {
-    grid-template-columns: 1fr 1fr;
-  }
+.shop{
+  position:absolute;
+  left:205px;
+  bottom:195px;
+  background:#fff;
+  color:#111;
+  padding:15px;
+  border:4px solid #333;
+  border-radius:10px;
+  font-weight:bold;
+}
 
-  button {
-    width: 100%;
-    margin: 4px 0;
-  }
+.palm{
+  position:absolute;
+  font-size:75px;
+  bottom:195px;
+}
+
+.palm1{left:390px}
+.palm2{right:180px}
+
+.character{
+  position:absolute;
+  left:48%;
+  bottom:115px;
+  font-size:65px;
+  transition:.5s;
+  z-index:5;
+}
+
+.car{
+  position:absolute;
+  left:52%;
+  bottom:105px;
+  font-size:65px;
+  z-index:4;
+  display:none;
+}
+
+.car.show{
+  display:block;
+}
+
+.location{
+  position:absolute;
+  left:15px;
+  bottom:15px;
+  background:#000b;
+  padding:9px 13px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.panel{
+  padding:15px;
+  background:#18242c;
+}
+
+.card{
+  background:#22333d;
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:14px;
+  box-shadow:0 3px 10px #0005;
+}
+
+.card h2{
+  margin-bottom:10px;
+  font-size:18px;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+}
+
+.green{background:#18a558;color:white}
+.yellow{background:#f5c542;color:#111}
+.blue{background:#3498db;color:white}
+.red{background:#d9534f;color:white}
+.purple{background:#8e44ad;color:white}
+.white{background:white;color:#111}
+
+.progress{
+  background:#111;
+  height:12px;
+  border-radius:20px;
+  overflow:hidden;
+  margin:5px 0 10px;
+}
+
+.progress div{
+  height:100%;
+  width:50%;
+  background:#21c76b;
+}
+
+.friend{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#172229;
+  padding:10px;
+  border-radius:10px;
+  margin:6px 0;
+}
+
+.log{
+  background:#0c1419;
+  padding:12px;
+  border-radius:10px;
+  max-height:160px;
+  overflow:auto;
+  font-size:13px;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000b;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:50;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modalBox{
+  width:100%;
+  max-width:450px;
+  background:#18242c;
+  border-radius:18px;
+  padding:20px;
+  max-height:85vh;
+  overflow:auto;
+}
+
+.bigEmoji{
+  font-size:70px;
+  text-align:center;
+  margin:10px;
+}
+
+.item{
+  background:#243640;
+  padding:12px;
+  border-radius:12px;
+  margin:8px 0;
+}
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#aaa;
+  font-size:12px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>🏙️ Lagos Hustle Life</h1>
-  <p>Build your life from nothing 💰</p>
-</header>
+<div class="game">
 
-<div class="container">
-
-  <div id="message">Welcome to Lagos Hustle Life! ❤️</div>
+<header class="top">
+  <h1>🌴 LAGOS LIFE</h1>
+  <div id="locationText">📍 Your Neighborhood</div>
 
   <div class="stats">
+    <div class="stat">💰<br>₦<span id="money">14100</span></div>
+    <div class="stat">⚡<br><span id="energy">100</span>%</div>
+    <div class="stat">🍔<br><span id="food">70</span></div>
+    <div class="stat">❤️<br><span id="friends">0</span></div>
+  </div>
+</header>
 
-    <div class="stat">
-      💰 Money:
-      <strong>₦<span id="money">0</span></strong>
-    </div>
+<section class="city">
 
-    <div class="stat">
-      ⚡ Energy:
-      <strong><span id="energy">100</span>%</strong>
-      <div class="progress">
-        <span id="energyBar"></span>
-      </div>
-    </div>
+  <div class="sun"></div>
+  <div class="cloud cloud1">☁️</div>
+  <div class="cloud cloud2">☁️</div>
 
-    <div class="stat">
-      🍔 Food:
-      <strong><span id="food">100</span>%</strong>
-    </div>
+  <div class="building"></div>
 
-    <div class="stat">
-      🏠 House:
-      <strong id="house">None</strong>
-    </div>
-
-    <div class="stat">
-      🚗 Car:
-      <strong id="car">None</strong>
-    </div>
-
-    <div class="stat">
-      💼 Business:
-      <strong id="business">None</strong>
-    </div>
-
+  <div class="shop">
+    🏪 MAMA'S SHOP<br>
+    <small>Cold drinks • Food • Snacks</small>
   </div>
 
-  <!-- HUSTLES -->
+  <div class="building2"></div>
 
-  <div class="card">
-    <h2>💼 Hustles</h2>
-    <p>Work to make money. Working uses energy.</p>
+  <div class="palm palm1">🌴</div>
+  <div class="palm palm2">🌴</div>
 
-    <button class="green" onclick="hustle('street')">
-      🛒 Street Hustle +₦2,000
-    </button>
+  <div class="road"></div>
 
-    <button class="green" onclick="hustle('delivery')">
-      🛵 Delivery +₦3,500
-    </button>
+  <div id="car" class="car">🚗</div>
+  <div id="character" class="character">🧍🏾‍♀️</div>
 
-    <button class="green" onclick="hustle('online')">
-      📱 Online Work +₦5,000
-    </button>
+  <div class="location" id="scene">📍 Outside your house</div>
+</section>
 
-    <button class="green" onclick="hustle('business')">
-      💼 Business Work +₦8,000
-    </button>
-  </div>
+<div class="panel">
 
-  <!-- BASIC LIFE -->
+<div class="card">
+<h2>🏠 Your Life</h2>
 
-  <div class="card">
-    <h2>🍔 Daily Life</h2>
+<p id="houseStatus">🏚️ You don't own a house yet.</p>
+<p id="carStatus">🚶🏾 You are currently walking.</p>
+<p id="businessStatus">💼 No business yet.</p>
 
-    <button class="orange" onclick="buyFood()">
-      🍚 Buy Food -₦1,500
-    </button>
+<div class="actions">
+<button class="green" onclick="enterHouse()">🏠 Enter House</button>
+<button class="blue" onclick="enterCar()">🚗 Enter Car</button>
+<button class="yellow" onclick="openMap()">🗺️ Explore Lagos</button>
+</div>
+</div>
 
-    <button class="blue" onclick="rest()">
-      😴 Rest
-    </button>
 
-    <button onclick="saveGame()">
-      💾 Save Game
-    </button>
+<div class="card">
+<h2>💼 Make Money</h2>
 
-    <button onclick="resetGame()">
-      🔄 Reset Game
-    </button>
-  </div>
+<div class="actions">
+<button class="green" onclick="work('street')">🚶🏾 Street Hustle +₦2,000</button>
+<button class="blue" onclick="work('delivery')">🛵 Delivery +₦3,500</button>
+<button class="purple" onclick="work('online')">📱 Online Work +₦5,000</button>
+<button class="yellow" onclick="work('business')">💼 Business +₦8,000</button>
+</div>
 
-  <!-- HOUSE -->
+<p style="margin-top:8px">⚡ Working uses energy.</p>
+</div>
 
-  <div class="card">
-    <h2>🏠 Houses</h2>
 
-    <div class="item">
-      <strong>🏚️ Small Room</strong>
-      <p>₦50,000</p>
-      <button onclick="buyHouse('Small Room',50000)">
-        Buy
-      </button>
-    </div>
+<div class="card">
+<h2>🍔 Food & Rest</h2>
 
-    <div class="item">
-      <strong>🏠 Nice Apartment</strong>
-      <p>₦250,000</p>
-      <button onclick="buyHouse('Nice Apartment',250000)">
-        Buy
-      </button>
-    </div>
+<div class="actions">
+<button class="yellow" onclick="buyFood()">🍚 Buy Food ₦1,500</button>
+<button class="blue" onclick="eat()">🍴 Eat Food</button>
+<button class="green" onclick="restOutside()">😴 Rest</button>
+</div>
+</div>
 
-    <div class="item">
-      <strong>🏡 Luxury House</strong>
-      <p>₦2,000,000</p>
-      <button onclick="buyHouse('Luxury House',2000000)">
-        Buy
-      </button>
-    </div>
 
-    <div class="item">
-      <strong>🏰 Mansion</strong>
-      <p>₦10,000,000</p>
-      <button onclick="buyHouse('Mansion',10000000)">
-        Buy
-      </button>
-    </div>
-  </div>
+<div class="card">
+<h2>🏠 Buy Property</h2>
 
-  <!-- CARS -->
+<div class="item">
+🏠 <b>Self Contain</b><br>
+₦50,000
+<button class="green" onclick="buyHouse('Self Contain',50000)">Buy</button>
+</div>
 
-  <div class="card">
-    <h2>🚗 Cars</h2>
+<div class="item">
+🏢 <b>Nice Apartment</b><br>
+₦250,000
+<button class="green" onclick="buyHouse('Nice Apartment',250000)">Buy</button>
+</div>
 
-    <div class="item">
-      🚙 Used Car — ₦500,000
-      <button onclick="buyCar('Used Car',500000)">
-        Buy
-      </button>
-    </div>
+<div class="item">
+🏡 <b>Luxury House</b><br>
+₦2,000,000
+<button class="green" onclick="buyHouse('Luxury House',2000000)">Buy</button>
+</div>
 
-    <div class="item">
-      🚘 Nice Car — ₦2,000,000
-      <button onclick="buyCar('Nice Car',2000000)">
-        Buy
-      </button>
-    </div>
+<div class="item">
+🏰 <b>Mansion</b><br>
+₦10,000,000
+<button class="green" onclick="buyHouse('Mansion',10000000)">Buy</button>
+</div>
+</div>
 
-    <div class="item">
-      🚘 Luxury Car — ₦8,000,000
-      <button onclick="buyCar('Luxury Car',8000000)">
-        Buy
-      </button>
-    </div>
 
-    <div class="item">
-      🏎️ Supercar — ₦30,000,000
-      <button onclick="buyCar('Supercar',30000000)">
-        Buy
-      </button>
-    </div>
-  </div>
+<div class="card">
+<h2>🚗 Cars</h2>
 
-  <!-- BUSINESSES -->
+<div class="item">
+🚙 <b>Used Car</b><br>
+₦500,000
+<button class="blue" onclick="buyCar('Used Car',500000,'🚙')">Buy</button>
+</div>
 
-  <div class="card">
-    <h2>🏪 Start a Business</h2>
+<div class="item">
+🚗 <b>Nice Car</b><br>
+₦2,000,000
+<button class="blue" onclick="buyCar('Nice Car',2000000,'🚗')">Buy</button>
+</div>
 
-    <div class="item">
-      👗 Thrift Business — ₦100,000
-      <button onclick="buyBusiness('Thrift Business',100000)">
-        Start
-      </button>
-    </div>
+<div class="item">
+🏎️ <b>Luxury Car</b><br>
+₦8,000,000
+<button class="blue" onclick="buyCar('Luxury Car',8000000,'🏎️')">Buy</button>
+</div>
 
-    <div class="item">
-      💇 Hair Business — ₦300,000
-      <button onclick="buyBusiness('Hair Business',300000)">
-        Start
-      </button>
-    </div>
+<div class="item">
+🏎️ <b>Supercar</b><br>
+₦30,000,000
+<button class="blue" onclick="buyCar('Supercar',30000000,'🏎️')">Buy</button>
+</div>
+</div>
 
-    <div class="item">
-      🍰 Cake Business — ₦500,000
-      <button onclick="buyBusiness('Cake Business',500000)">
-        Start
-      </button>
-    </div>
 
-    <div class="item">
-      🏢 Big Company — ₦5,000,000
-      <button onclick="buyBusiness('Big Company',5000000)">
-        Start
-      </button>
-    </div>
-  </div>
+<div class="card">
+<h2>🛍️ Start a Business</h2>
 
-  <!-- LIFE GOALS -->
+<div class="item">
+👖 <b>Thrift Business</b> — ₦100,000
+<button class="purple" onclick="buyBusiness('Thrift Business',100000)">Start</button>
+</div>
 
-  <div class="card">
-    <h2>🎯 Life Goals</h2>
+<div class="item">
+💇🏾‍♀️ <b>Hair Business</b> — ₦300,000
+<button class="purple" onclick="buyBusiness('Hair Business',300000)">Start</button>
+</div>
 
-    <p>Make ₦100,000</p>
-    <p>🏠 Buy a house</p>
-    <p>🚗 Buy a car</p>
-    <p>💼 Start a business</p>
-    <p>💰 Become wealthy</p>
-    <p>👑 Become a Lagos Hustle Millionaire</p>
-  </div>
+<div class="item">
+🎂 <b>Cake Business</b> — ₦500,000
+<button class="purple" onclick="buyBusiness('Cake Business',500000)">Start</button>
+</div>
+
+<div class="item">
+🏢 <b>Big Company</b> — ₦5,000,000
+<button class="purple" onclick="buyBusiness('Big Company',5000000)">Start</button>
+</div>
+</div>
+
+
+<div class="card">
+<h2>👥 Friends & Social Life</h2>
+
+<div id="friendsList"></div>
+
+<div class="actions">
+<button class="green" onclick="meetFriend()">👋 Meet Someone</button>
+<button class="blue" onclick="visitFriends()">🏘️ Visit Friends</button>
+</div>
+</div>
+
+
+<div class="card">
+<h2>🗺️ Lagos Places</h2>
+
+<div class="actions">
+<button onclick="travel('Ikeja')">📍 Ikeja</button>
+<button onclick="travel('Lekki')">🌊 Lekki</button>
+<button onclick="travel('Yaba')">🎓 Yaba</button>
+<button onclick="travel('Surulere')">🏙️ Surulere</button>
+<button onclick="travel('Oshodi')">🚌 Oshodi</button>
+<button onclick="travel('Victoria Island')">🌆 VI</button>
+</div>
+</div>
+
+
+<div class="card">
+<h2>📜 Life Updates</h2>
+<div id="log" class="log">
+Welcome to Lagos! Your new life begins. 🌴
+</div>
+</div>
+
+
+<div class="card">
+<h2>💾 Game</h2>
+
+<button class="green" onclick="saveGame()">💾 Save Game</button>
+<button class="red" onclick="resetGame()">🔄 New Life</button>
+</div>
 
 </div>
 
+<footer>
+Lagos Life Simulator 🌴🇳🇬
+</footer>
+
+</div>
+
+
+<!-- HOUSE MODAL -->
+<div class="modal" id="houseModal">
+<div class="modalBox">
+
+<h2>🏠 Inside Your House</h2>
+
+<div class="bigEmoji">🛋️ 🛏️</div>
+
+<p id="insideHouseText">
+Your home is peaceful. You can rest here and recover energy.
+</p>
+
+<button class="green" onclick="sleep()">🛏️ Sleep</button>
+<button class="blue" onclick="watchTV()">📺 Watch TV</button>
+<button class="yellow" onclick="cook()">🍳 Cook Food</button>
+<button class="red" onclick="closeModal('houseModal')">🚪 Leave House</button>
+
+</div>
+</div>
+
+
+<!-- CAR MODAL -->
+<div class="modal" id="carModal">
+<div class="modalBox">
+
+<h2>🚗 Your Car</h2>
+
+<div class="bigEmoji" id="carEmoji">🚗</div>
+
+<p>Where do you want to drive?</p>
+
+<button class="blue" onclick="drive('Ikeja')">📍 Ikeja</button>
+<button class="blue" onclick="drive('Lekki')">🌊 Lekki</button>
+<button class="blue" onclick="drive('Yaba')">🎓 Yaba</button>
+<button class="blue" onclick="drive('Victoria Island')">🌆 Victoria Island</button>
+
+<button class="red" onclick="closeModal('carModal')">🚪 Get Out</button>
+
+</div>
+</div>
+
+
+<!-- MAP MODAL -->
+<div class="modal" id="mapModal">
+<div class="modalBox">
+
+<h2>🗺️ Explore Lagos</h2>
+
+<div class="item">🌴 <b>Ikeja</b><br>Busy city • Jobs • Shopping</div>
+<div class="item">🌊 <b>Lekki</b><br>Beach • Nice houses • Restaurants</div>
+<div class="item">🎓 <b>Yaba</b><br>Young people • Tech • Friends</div>
+<div class="item">🏙️ <b>Surulere</b><br>Neighborhood • Shops • Food</div>
+<div class="item">🌆 <b>Victoria Island</b><br>Luxury • Offices • Rich people</div>
+
+<button class="red" onclick="closeModal('mapModal')">Close</button>
+
+</div>
+</div>
+
+
 <script>
 
-let money = Number(localStorage.getItem("money")) || 0;
-let energy = Number(localStorage.getItem("energy")) || 100;
-let food = Number(localStorage.getItem("food")) || 100;
+let money = Number(localStorage.getItem("lagosMoney")) || 14100;
+let energy = Number(localStorage.getItem("lagosEnergy")) || 100;
+let food = Number(localStorage.getItem("lagosFood")) || 70;
 
-let house = localStorage.getItem("house") || "None";
-let car = localStorage.getItem("car") || "None";
-let business = localStorage.getItem("business") || "None";
+let house = localStorage.getItem("lagosHouse") || "";
+let car = localStorage.getItem("lagosCar") || "";
+let carEmoji = localStorage.getItem("lagosCarEmoji") || "🚗";
+let business = localStorage.getItem("lagosBusiness") || "";
 
-function update() {
+let locationName = localStorage.getItem("lagosLocation") || "Your Neighborhood";
 
-  document.getElementById("money").textContent =
-    money.toLocaleString();
+let friends = JSON.parse(localStorage.getItem("lagosFriends") || "[]");
 
-  document.getElementById("energy").textContent = energy;
+function update(){
 
-  document.getElementById("food").textContent = food;
+ document.getElementById("money").textContent =
+ money.toLocaleString();
 
-  document.getElementById("house").textContent = house;
+ document.getElementById("energy").textContent =
+ Math.max(0,energy);
 
-  document.getElementById("car").textContent = car;
+ document.getElementById("food").textContent =
+ food;
 
-  document.getElementById("business").textContent = business;
+ document.getElementById("friends").textContent =
+ friends.length;
 
-  document.getElementById("energyBar").style.width =
-    energy + "%";
+ document.getElementById("locationText").textContent =
+ "📍 " + locationName;
 
-  localStorage.setItem("money", money);
-  localStorage.setItem("energy", energy);
-  localStorage.setItem("food", food);
-  localStorage.setItem("house", house);
-  localStorage.setItem("car", car);
-  localStorage.setItem("business", business);
+ document.getElementById("scene").textContent =
+ "📍 " + locationName;
+
+ document.getElementById("houseStatus").textContent =
+ house ? "🏠 You own a " + house : "🏚️ You don't own a house yet.";
+
+ document.getElementById("carStatus").textContent =
+ car ? "🚗 You own a " + car : "🚶🏾 You are currently walking.";
+
+ document.getElementById("businessStatus").textContent =
+ business ? "💼 Business: " + business : "💼 No business yet.";
+
+ document.getElementById("carEmoji").textContent =
+ carEmoji;
+
+ document.getElementById("car").textContent =
+ carEmoji;
+
+ document.getElementById("car").className =
+ car ? "car show" : "car";
+
+ document.getElementById("character").style.left =
+ "48%";
+
+ renderFriends();
+
 }
 
-function message(text) {
-  document.getElementById("message").textContent = text;
+function log(message){
+
+ let box = document.getElementById("log");
+
+ box.innerHTML =
+ "• " + message + "<br>" + box.innerHTML;
 }
 
-function hustle(type) {
+function saveGame(){
 
-  if (energy < 15) {
-    message("😴 You are too tired. Rest first!");
-    return;
-  }
+ localStorage.setItem("lagosMoney",money);
+ localStorage.setItem("lagosEnergy",energy);
+ localStorage.setItem("lagosFood",food);
+ localStorage.setItem("lagosHouse",house);
+ localStorage.setItem("lagosCar",car);
+ localStorage.setItem("lagosCarEmoji",carEmoji);
+ localStorage.setItem("lagosBusiness",business);
+ localStorage.setItem("lagosLocation",locationName);
+ localStorage.setItem("lagosFriends",JSON.stringify(friends));
 
-  if (food <= 0) {
-    message("🍔 You need food before working!");
-    return;
-  }
+ log("Game saved successfully 💾");
 
-  let earnings = 0;
-
-  if (type === "street") {
-    earnings = 2000;
-  }
-
-  if (type === "delivery") {
-    earnings = 3500;
-  }
-
-  if (type === "online") {
-    earnings = 5000;
-  }
-
-  if (type === "business") {
-    earnings = 8000;
-  }
-
-  money += earnings;
-  energy -= 15;
-  food -= 5;
-
-  if (energy < 0) energy = 0;
-  if (food < 0) food = 0;
-
-  message("🔥 Hustle complete! You earned ₦" +
-          earnings.toLocaleString());
-
-  update();
 }
 
-function buyFood() {
+function work(type){
 
-  if (money < 1500) {
-    message("❌ You don't have enough money for food.");
-    return;
-  }
+ if(energy < 15){
+  alert("You are too tired. Rest first 😴");
+  return;
+ }
 
-  money -= 1500;
-  food += 30;
+ let earnings = 0;
 
-  if (food > 100) food = 100;
+ if(type === "street") earnings = 2000;
+ if(type === "delivery") earnings = 3500;
+ if(type === "online") earnings = 5000;
+ if(type === "business") earnings = business ? 8000 : 1000;
 
-  message("🍚 You bought food. Your energy can now recover!");
+ money += earnings;
+ energy -= 15;
 
-  update();
+ log("You worked and earned ₦" + earnings.toLocaleString() + " 💰");
+
+ update();
+ saveGame();
 }
 
-function rest() {
+function buyFood(){
 
-  if (food <= 0) {
-    message("🍔 You need food before resting.");
-    return;
-  }
+ if(money < 1500){
+  alert("You need ₦1,500.");
+  return;
+ }
 
-  energy += 35;
-  food -= 10;
+ money -= 1500;
+ food += 30;
 
-  if (energy > 100) energy = 100;
-  if (food < 0) food = 0;
+ log("You bought food 🍚");
 
-  message("😴 You rested and recovered energy.");
-
-  update();
+ update();
+ saveGame();
 }
 
-function buyHouse(name, price) {
+function eat(){
 
-  if (house !== "None") {
-    message("🏠 You already own a house!");
-    return;
-  }
+ if(food < 10){
+  alert("You don't have enough food. Buy food first.");
+  return;
+ }
 
-  if (money < price) {
-    message("❌ You need ₦" +
-      (price - money).toLocaleString() +
-      " more.");
-    return;
-  }
+ food -= 10;
+ energy = Math.min(100,energy + 10);
 
-  money -= price;
-  house = name;
+ log("You ate and feel better 🍴");
 
-  message("🎉 Congratulations! You bought a " + name + "! 🏠");
-
-  update();
+ update();
+ saveGame();
 }
 
-function buyCar(name, price) {
+function restOutside(){
 
-  if (car !== "None") {
-    message("🚗 You already own a car!");
-    return;
-  }
+ energy = Math.min(100,energy + 25);
 
-  if (money < price) {
-    message("❌ You need ₦" +
-      (price - money).toLocaleString() +
-      " more.");
-    return;
-  }
+ log("You rested outside and recovered energy 😴");
 
-  money -= price;
-  car = name;
-
-  message("🎉 Congratulations! You bought a " + name + "! 🚗");
-
-  update();
+ update();
+ saveGame();
 }
 
-function buyBusiness(name, price) {
+function buyHouse(name,price){
 
-  if (business !== "None") {
-    message("💼 You already own a business!");
-    return;
-  }
+ if(house){
+  alert("You already own a house. Upgrade later!");
+  return;
+ }
 
-  if (money < price) {
-    message("❌ You need ₦" +
-      (price - money).toLocaleString() +
-      " more.");
-    return;
-  }
+ if(money < price){
+  alert("You need ₦" + price.toLocaleString());
+  return;
+ }
 
-  money -= price;
-  business = name;
+ money -= price;
+ house = name;
 
-  message("🎉 Your " + name + " is now open! 🏪");
+ log("Congratulations! You bought a " + name + " 🏠");
 
-  update();
+ update();
+ saveGame();
 }
 
-function saveGame() {
+function buyCar(name,price,emoji){
 
-  update();
+ if(car){
+  alert("You already own a car.");
+  return;
+ }
 
-  message("💾 Game saved successfully!");
+ if(money < price){
+  alert("You need ₦" + price.toLocaleString());
+  return;
+ }
+
+ money -= price;
+ car = name;
+ carEmoji = emoji;
+
+ log("You bought a " + name + " 🚗");
+
+ update();
+ saveGame();
 }
 
-function resetGame() {
+function buyBusiness(name,price){
 
-  if (!confirm("Are you sure you want to restart your life?")) {
-    return;
-  }
+ if(business){
+  alert("You already own a business.");
+  return;
+ }
 
-  money = 0;
-  energy = 100;
-  food = 100;
-  house = "None";
-  car = "None";
-  business = "None";
+ if(money < price){
+  alert("You need ₦" + price.toLocaleString());
+  return;
+ }
 
-  update();
+ money -= price;
+ business = name;
 
-  message("🔄 New life started!");
+ log("Your " + name + " is now open! 🎉");
+
+ update();
+ saveGame();
+}
+
+function enterHouse(){
+
+ if(!house){
+  alert("You need to buy a house first 🏠");
+  return;
+ }
+
+ document.getElementById("houseModal").classList.add("show");
+
+ log("You entered your " + house + " 🏠");
+
+}
+
+function sleep(){
+
+ energy = 100;
+
+ closeModal("houseModal");
+
+ log("You slept peacefully in your house. Energy is full! 😴");
+
+ update();
+ saveGame();
+}
+
+function watchTV(){
+
+ energy = Math.min(100,energy + 5);
+
+ log("You relaxed and watched TV 📺");
+
+ update();
+}
+
+function cook(){
+
+ if(food < 15){
+  alert("You don't have enough food ingredients.");
+  return;
+ }
+
+ food -= 15;
+ energy = Math.min(100,energy + 15);
+
+ log("You cooked and ate a nice meal 🍳");
+
+ update();
+ saveGame();
+}
+
+function enterCar(){
+
+ if(!car){
+  alert("You need to buy a car first 🚗");
+  return;
+ }
+
+ document.getElementById("carModal").classList.add("show");
+
+ log("You entered your " + car + " 🚗");
+
+}
+
+function drive(place){
+
+ if(energy < 10){
+  alert("You are tired. Rest first.");
+  return;
+ }
+
+ energy -= 10;
+ locationName = place;
+
+ closeModal("carModal");
+
+ log("You drove to " + place + " 🚗💨");
+
+ update();
+ saveGame();
+}
+
+function travel(place){
+
+ if(energy < 10){
+  alert("You need energy to travel.");
+  return;
+ }
+
+ energy -= 10;
+ locationName = place;
+
+ log("You travelled to " + place + " 📍");
+
+ update();
+ saveGame();
+}
+
+function openMap(){
+
+ document.getElementById("mapModal").classList.add("show");
+
+}
+
+function closeModal(id){
+
+ document.getElementById(id).classList.remove("show");
+
+}
+
+function meetFriend(){
+
+ if(energy < 10){
+  alert("You are tired.");
+  return;
+ }
+
+ let names = [
+  "Tobi",
+  "Amaka",
+  "Blessing",
+  "Daniel",
+  "Sandra",
+  "Emeka",
+  "Joy",
+  "Chisom"
+ ];
+
+ let available =
+ names.filter(n => !friends.some(f => f.name === n));
+
+ if(available.length === 0){
+  alert("You already know everyone around here 😂");
+  return;
+ }
+
+ let name =
+ available[Math.floor(Math.random()*available.length)];
+
+ friends.push({
+  name:name,
+  level:1
+ });
+
+ energy -= 10;
+
+ log("You met " + name + " and became friends! 👋🏾");
+
+ update();
+ saveGame();
+}
+
+function visitFriends(){
+
+ if(friends.length === 0){
+  alert("You don't have friends yet. Go meet someone!");
+  return;
+ }
+
+ let friend =
+ friends[Math.floor(Math.random()*friends.length)];
+
+ friend.level += 1;
+
+ energy -= 5;
+
+ log("You visited " + friend.name + " ❤️ Friendship level: " + friend.level);
+
+ update();
+ saveGame();
+}
+
+function renderFriends(){
+
+ let box =
+ document.getElementById("friendsList");
+
+ if(friends.length === 0){
+
+  box.innerHTML =
+  "<p>You haven't made any friends yet. Go outside and meet people! 👋🏾</p>";
+
+  return;
+ }
+
+ box.innerHTML = "";
+
+ friends.forEach(friend => {
+
+  let div =
+  document.createElement("div");
+
+  div.className = "friend";
+
+  div.innerHTML =
+  "<span>👤 " + friend.name +
+  "</span><span>❤️ Level " +
+  friend.level + "</span>";
+
+  box.appendChild(div);
+
+ });
+
+}
+
+function resetGame(){
+
+ if(!confirm("Start a completely new life?")){
+  return;
+ }
+
+ localStorage.clear();
+
+ money = 14100;
+ energy = 100;
+ food = 70;
+ house = "";
+ car = "";
+ carEmoji = "🚗";
+ business = "";
+ locationName = "Your Neighborhood";
+ friends = [];
+
+ document.getElementById("log").innerHTML =
+ "Welcome to Lagos! Your new life begins. 🌴";
+
+ update();
+
 }
 
 update();
